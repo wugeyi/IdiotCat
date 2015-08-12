@@ -65,19 +65,43 @@ use Parse\ParseQuery;
         <div class="postComment">
             <?php
                 $queryReply = new ParseQuery("Reply");
-                $queryReply->equalTo("bolongTo", $postResult);
+                $queryReply->includeKey("author");
+                $queryReply->equalTo("belongTo", $postResult);
                 $replyList = $queryReply -> find();
+                //$replyList->fetchAll();
                 
-                
-                $replyCount = $replyList -> count();
+                $replyCount = $queryReply -> count();
+            ?>
+            <div class="comment-Header">
+                <?php
+                    echo $replyCount . "个回复";
+                ?>
+            </div>
+            <?php
                 for($i = 0; $i < $replyCount; $i++){
                     $replyAuthor = $replyList[$i]->get("author");
-                    $replyAuthor->fetch();
-                    
+                    //$replyAuthor->fetch();
+                    $name = $replyAuthor->get("name");
+                    //var_dump($replyList[$i]->getCreatedAt());
+                    //$date = date("Y-m-d H:i", $replyList[$i]->getCreatedAt());
+                    $date = date_format($replyList[$i]->getCreatedAt(), "Y-m-d H:i:s");
                     $replyContent = $replyList[$i]->get("replyContent");
                     
                     echo "<div class=\"replyStyle\">";
-                    echo "";
+                    echo "<div class=\"replyAuthor\">";
+                    echo "<span class=\"glyphicon glyphicon-user\"></span>";
+                    echo " ";
+                    echo $name;
+                    echo "&nbsp;&nbsp;&nbsp;&nbsp;";
+                    echo "<span class=\"glyphicon glyphicon-time\"></span>";
+                    echo " ";
+                    echo $date;
+                    echo "</div>";
+                    
+                    echo "<div class=\"replyContent\">";
+                    echo $replyContent;
+                    echo "</div>";
+                    echo "<br>";
                     echo "</div>";
                 }
                 
