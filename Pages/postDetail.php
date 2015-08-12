@@ -70,11 +70,11 @@ and open the template in the editor.
             
             for($x=0; $x < $imageCount; $x++)
             {
-                $imageTag = "<#I#M#A#G#E#>" . $x . "</#I#M#A#G#E#><#T#E#X#T#></#T#E#X#T#>";
+                $imageTag = "<#I#M#A#G#E#>" . $x . "</#I#M#A#G#E#>";
                 $imageUrl = $imageArray[$x]->getURL();
                 $imageUrlTag = "<br/><img src='" . $imageUrl . "'/><br/>";
                 $content = str_replace($imageTag, $imageUrlTag, $content);
-                echo $content;
+                //echo $content;
             }
         ?>
         
