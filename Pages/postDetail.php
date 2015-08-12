@@ -19,7 +19,6 @@ use Parse\ParseQuery;
             // error is a ParseException with an error code and message.
         }
 
-
         $title = $postResult->get("title");
         $content = $postResult->get("content");
         $author = $postResult->get("author");
@@ -61,4 +60,26 @@ use Parse\ParseQuery;
                     ?>
                 </p>
             </div>
+        </div>
+        <!--Post Comment-->
+        <div class="postComment">
+            <?php
+                $queryReply = new ParseQuery("Reply");
+                $queryReply->equalTo("bolongTo", $postResult);
+                $replyList = $queryReply -> find();
+                
+                
+                $replyCount = $replyList -> count();
+                for($i = 0; $i < $replyCount; $i++){
+                    $replyAuthor = $replyList[$i]->get("author");
+                    $replyAuthor->fetch();
+                    
+                    $replyContent = $replyList[$i]->get("replyContent");
+                    
+                    echo "<div class=\"replyStyle\">";
+                    echo "";
+                    echo "</div>";
+                }
+                
+            ?>
         </div>
