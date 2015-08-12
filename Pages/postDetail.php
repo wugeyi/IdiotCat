@@ -1,27 +1,5 @@
 <?php
-date_default_timezone_set("UTC");
-require "autoload.php";
-
-use Parse\ParseObject;
 use Parse\ParseQuery;
-use Parse\ParseACL;
-use Parse\ParsePush;
-use Parse\ParseUser;
-use Parse\ParseInstallation;
-use Parse\ParseException;
-use Parse\ParseAnalytics;
-use Parse\ParseFile;
-use Parse\ParseCloud;
-use Parse\ParseClient;
-
-$app_id = "UfhHlFN8D7VKIqtmEEKZmwjrOjesnL3ng4seZmzA";
-$rest_key = "arZRU6XnGAtrecMQriDvpt27UDrzkcpsFDfIdFno";
-$master_key = "HDbRL4H8YjOCg0D2tNHBbmiIvP8viGWf3onHTx0u";
-
-session_start();
-
-ParseClient::initialize($app_id, $rest_key, $master_key);
-
 //if (isset($_POST["logout"])) {
 //    ParseUser::logOut();
 //    $currentUser = ParseUser::getCurrentUser();
@@ -29,18 +7,6 @@ ParseClient::initialize($app_id, $rest_key, $master_key);
 //}
 //
 ?>
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Monash Survival Guide</title>
-    </head>
-    <body>
         <!-- CONTENT -->
         <?php
         //$postID = $_GET['pid'];
@@ -96,8 +62,3 @@ and open the template in the editor.
                 </p>
             </div>
         </div>
-        
-        
-        
-    </body>
-</html>
