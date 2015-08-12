@@ -43,7 +43,8 @@ and open the template in the editor.
     <body>
         <!-- CONTENT -->
         <?php
-        $postID = $_GET['pid'];
+        //$postID = $_GET['pid'];
+        $postID = "WzPH1MSoGr";
         $query = new ParseQuery("Post");
         try {
             $postResult = $query->get($postID);
@@ -88,7 +89,8 @@ and open the template in the editor.
             </div>
             <!--Post Content-->
             <div class="postContent">
-                <p><?php
+                <p>
+                    <?php
                     echo $content;
                     ?>
                 </p>
