@@ -1,5 +1,5 @@
 <?php
-require "initial.php";
+require "./initial.php";
 ?>
 
 <!DOCTYPE html>
