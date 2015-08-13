@@ -1,85 +1,73 @@
 <?php
-
 use Parse\ParseQuery;
+require_once 'utilities.php';
 
-//if (isset($_POST["logout"])) {
-//    ParseUser::logOut();
-//    $currentUser = ParseUser::getCurrentUser();
-//    echo "<script language=JavaScript> location.replace(index.php);</script>";
-//}
-//
+function postDetail($postID)
+{
+    $query = new ParseQuery("Post");
+    $query->includeKey("author");
+    $query->includeKey("unit");
+    $query->includeKey("unit.faculty");
+    
+    try 
+    {
+        $postResult = $query->get($postID);
+    } catch (ParseException $ex) {
+        echo "404 error";
+    }
+    
+    $title = $postResult->get("title");
+    $content = $postResult->get("content");
+    $author = $postResult->get("author");
+    $unit = $postResult->get("unit");
+    $name = $author->get("name");
+    $code = $unit->get("code");
+    $imageArray = $postResult->get("mediaFiles");
+    $imageCount = count($imageArray);
+
+    for ($x = 0; $x < $imageCount; $x++) {
+        $imageTag = "<#I#M#A#G#E#>" . $x . "</#I#M#A#G#E#>";
+        $imageUrl = $imageArray[$x]->getURL();
+        $imageUrlTag = "<br/><img src='" . $imageUrl . "'/><br/>";
+        $content = str_replace($imageTag, $imageUrlTag, $content);
+    }
+    
+    cleanDesTag($content);
 ?>
-<!-- CONTENT -->
+    <div class="postDetails">
+        <!--Title-->
+        <div class="postTitle">
+            <?php echo $title; ?>
+        </div>
+        <!--Post Information-->
+        <div class="postInfo">
+            <?php echo $name; ?>
+        </div>
+        <!--Post Content-->
+        <div class="postContent">
+            <p>
+                <?php
+                echo $content;
+                ?>
+            </p>
+        </div>
+    </div>
 <?php
-//$postID = $_GET['pid'];
-$postID = "WzPH1MSoGr";
-$query = new ParseQuery("Post");
-try {
-    $postResult = $query->get($postID);
-} catch (ParseException $ex) {
-    // The object was not retrieved successfully.
-    // error is a ParseException with an error code and message.
-}
-
-$title = $postResult->get("title");
-$content = $postResult->get("content");
-$author = $postResult->get("author");
-$author->fetch();
-$unit = $postResult->get("unit");
-$unit->fetch();
-//            
-$name = $author->get("name");
-$code = $unit->get("code");
-//array:
-$imageArray = $postResult->get("mediaFiles");
-
-$imageCount = count($imageArray);
-
-for ($x = 0; $x < $imageCount; $x++) {
-    $imageTag = "<#I#M#A#G#E#>" . $x . "</#I#M#A#G#E#>";
-    $imageUrl = $imageArray[$x]->getURL();
-    $imageUrlTag = "<br/><img src='" . $imageUrl . "'/><br/>";
-    $content = str_replace($imageTag, $imageUrlTag, $content);
-    //echo $content;
-}
-?>
-
-<div class="postDetails">
-    <!--Title-->
-    <div class="postTitle">
-        <?php echo $title; ?>
-    </div>
-    <!--Post Information-->
-    <div class="postInfo">
-        <?php echo $name; ?>
-    </div>
-    <!--Post Content-->
-    <div class="postContent">
-        <p>
-            <?php
-            echo $content;
-            ?>
-        </p>
-    </div>
-</div>
-<!--Post Comment-->
-<div class="postComment">
-    <?php
     $queryReply = new ParseQuery("Reply");
     $queryReply->includeKey("author");
     $queryReply->includeKey("replyTo.author");
     $queryReply->equalTo("belongTo", $postResult);
     $replyList = $queryReply->find();
-    //$replyList->fetchAll();
-
     $replyCount = $queryReply->count();
-    ?>
-    <div class="comment-Header">
-        <?php
-        echo $replyCount . "个回复";
-        ?>
-    </div>
-    <?php
+?>
+    <!--Post Comment-->
+    <div class="postComment">
+        <div class="comment-Header">
+                <?php
+                echo $replyCount . "个回复";
+                ?>
+        </div>
+<?php
     for ($i = 0; $i < $replyCount; $i++) {
         $replyTo = $replyList[$i]->get("replyTo");
         if (empty($replyTo)) {
@@ -122,5 +110,8 @@ for ($x = 0; $x < $imageCount; $x++) {
             echo "空空空空";
         }
     }
-    ?>
+?>
 </div>
+<?php
+}
+
