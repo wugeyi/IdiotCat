@@ -2,7 +2,7 @@
 
 $title = "Monash Survival Guide";
 
-require 'config.php';
+require_once 'config.php';
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 

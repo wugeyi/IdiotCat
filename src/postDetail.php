@@ -32,7 +32,7 @@ function postDetail($postID)
         $content = str_replace($imageTag, $imageUrlTag, $content);
     }
     
-    cleanDesTag($content);
+    $content = cleanDesTag($content);
 ?>
     <div class="postDetails">
         <!--Title-->
