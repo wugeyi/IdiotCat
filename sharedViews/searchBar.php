@@ -1,31 +1,42 @@
-<script>
-function showSearchResult(str) {
-  if (str.length==0) { 
-    document.getElementById("livesearch").innerHTML="";
-    document.getElementById("livesearch").style.border="0px";
-    return;
-  }
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {  // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-      document.getElementById("livesearch").innerHTML=xmlhttp.responseText;
-      document.getElementById("livesearch").style.border="1px solid #A5ACB2";
-    }
-  }
-  xmlhttp.open("GET","./src/livesearch.php?q="+str,true);
-  xmlhttp.send();
-}
-</script>
-
-<form name="search_form">
+<form name="search_form" method="post" action="search.php">
     <div>
-    <input type="text" size="30" onkeyup="showSearchResult(this.value)" />
+    <input type="text" id="query" name="q"/>
+    <input type="submit" value="Search"/>
     </div>
     <div id="livesearch"></div>
 </form>
-<div>*******************</div>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+  $(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#query" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
