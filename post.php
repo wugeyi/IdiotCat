@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require_once 'config.php';
 
 $pid = isset($_GET['pid']) ? $_GET['pid'] : '';
 if($pid=='')

@@ -3,7 +3,7 @@ use Parse\ParseQuery;
 require_once 'postItem.php';
 require_once 'pagination.php';
 
-function postItemList($page=1)
+function postItemList($unitId='all', $page=1)
 {
     if(!isset($page))
     {
@@ -19,6 +19,20 @@ function postItemList($page=1)
     
     $query = new ParseQuery("Post");
     
+    if($unitId != 'all')
+    {
+        $unitQuery = new ParseQuery("Unit");
+        $unitQuery->equalTo('objectId', $unitId);
+        $unit = $unitQuery->first();
+        $query->matchesQuery("unit", $unitQuery);
+        
+        echo "<h2>".$unit->get("code")."&nbsp".$unit->get("name")."</h2>";
+    }
+    else
+    {
+        echo "<h2>All Units</h2>";
+    }
+    
     $query->skip($offset);
     $query->limit(POSTS_PER_PAGE);
     $query->includeKey("author");
@@ -26,7 +40,7 @@ function postItemList($page=1)
     $query->includeKey("unit.faculty");
     $query->descending("createdAt");
     $results = $query->find();
-    
+
     
     for ($i = 0; $i < count($results); $i++) 
     {
@@ -36,5 +50,5 @@ function postItemList($page=1)
     }
     
     
-    pagination($page);
+    pagination($unitId,$page);
 }

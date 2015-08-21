@@ -1,6 +1,6 @@
 <?php
 
-function pagination($currentPage=1)
+function pagination($unitId='all',$currentPage=1)
 {
     if($currentPage < 0 || $currentPage > MAX_PAGE)
     {
@@ -13,7 +13,7 @@ function pagination($currentPage=1)
 <?php
     if($currentPage>1)
     {
-        echo pageLink($currentPage-1, "Previous");
+        echo pageLink($unitId,$currentPage-1, "Previous");
         echo "&nbsp";
     }
     
@@ -21,18 +21,18 @@ function pagination($currentPage=1)
     {
         for($i = 1; $i < 7; $i++)
         {
-            echo pageLink($i, $i);
+            echo pageLink($unitId,$i, $i);
             echo "&nbsp";
         }
     }
     else
     {
-        echo pageLink(1, "1");
+        echo pageLink($unitId,1, "1");
         echo "...";
         echo "&nbsp";
         for($i = $currentPage-$offset+1; $i < $currentPage+$offset; $i++)
         {
-            echo pageLink($i, $i);
+            echo pageLink($unitId,$i, $i);
             echo "&nbsp";
         }
     }
@@ -41,7 +41,7 @@ function pagination($currentPage=1)
     {
         echo "...";
         echo "&nbsp";
-        echo pageLink($currentPage+1, "Next");
+        echo pageLink($unitId,$currentPage+1, "Next");
     }
     
 ?>
@@ -49,9 +49,9 @@ function pagination($currentPage=1)
 <?php
 }  
 
-function pageLink($pageNumber,$description)
+function pageLink($unitId,$pageNumber,$description)
 {
-        $link = "<a href='?page=".$pageNumber."'>".$description."</a>";
+        $link = "<a href='?p=".$pageNumber."&u=".$unitId."'>".$description."</a>";
         return $link;
 }
 ?>

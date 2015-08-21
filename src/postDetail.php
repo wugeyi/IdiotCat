@@ -37,9 +37,9 @@ function postDetail($postID) {
         $imageUrlTag = "<br/><img src='" . $imageUrl . "'/><br/>";
         $content = str_replace($imageTag, $imageUrlTag, $content);
     }
-
-    cleanDesTag($content);
-    ?>
+    
+    $content = cleanDesTag($content);
+?>
     <div class="postDetails">
         <!--Title-->
         <div class="postTitle">
