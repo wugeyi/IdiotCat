@@ -4,7 +4,7 @@ use Parse\ParseQuery;
 function postItem($postID='')
 {
     //Set Default value for tet
-    if($postId == '')
+    if($postID == '')
     {
         $postID = "WzPH1MSoGr";
     }
